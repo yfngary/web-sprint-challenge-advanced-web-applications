@@ -12,8 +12,13 @@ export default function Articles(props) {
 
   useEffect(() => {
     // ✨ grab the articles here, on first render only
-    !token && navigate("/") 
-    getArticles();
+    if(!token){
+      navigate('/')
+    } else {
+      getArticles();
+    }
+    // !token && navigate("/") 
+    // getArticles();
   }, [])
   return (
     // ✨ fix the JSX: replace `Function.prototype` with actual functions

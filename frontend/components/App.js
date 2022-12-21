@@ -95,11 +95,13 @@ export default function App() {
     // You got this!
     axiosWithAuth().put(`http://localhost:9000/api/articles/${id}`, article)
       .then(res => {
+        setCurrentArticleId(null);
         setArticles(articles.map(a => a.article_id === id ? res.data.article : a));
         setMessage(res.data.message)
+        // setCurrentArticleId(null);
       })
       .catch(err => { 
-        console.log(err) 
+        console.log(err)   
       })
   }
 
@@ -107,7 +109,8 @@ export default function App() {
     // ✨ implement
     axiosWithAuth().delete(`http://localhost:9000/api/articles/${article_id}`)
       .then(res => {
-        getArticles();
+        console.log(res)
+        setArticles(articles.filter(a => a.article_id !== article_id))  
         setMessage(res.data.message);
       })
       .catch(err => {
@@ -129,7 +132,7 @@ export default function App() {
         </nav>
         <Routes>
           <Route path="/" element={<LoginForm login={login} navigateLogin={redirectToLogin} navigateArticles={redirectToArticles}/>} />
-          <Route path="articles" element={
+          <Route path="/articles" element={
             <>
               <ArticleForm postArticle={postArticle} updateArticle={updateArticle} currentArticle={articles.find(a => a.article_id === currentArticleId)} setCurrentArticleId={setCurrentArticleId} currentArticleId={currentArticleId}/>
               <Articles getArticles={getArticles} articles={articles} setCurrentArticleId={setCurrentArticleId} currentArticleId={currentArticleId} deleteArticle={deleteArticle}/>

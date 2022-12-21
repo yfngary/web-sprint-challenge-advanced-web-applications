@@ -30,10 +30,12 @@ export default function ArticleForm(props) {
       console.log(currentArticle)
       console.log(values)
       updateArticle(currentArticle.article_id, values)
+      setCurrentArticleId(null)
     } else {
       postArticle(values)
+      setValues(initialFormValues);
+      console.log('fired');
     }
-    setValues(initialFormValues);
     // ✨ implement
     // We must submit a new post or update an existing one,
     // depending on the truthyness of the `currentArticle` prop.
@@ -75,8 +77,8 @@ export default function ArticleForm(props) {
         <option value="Node">Node</option>
       </select>
       <div className="button-group">
-        <button disabled={isDisabled()} id="submitArticle">Submit</button>
-        <button onClick={() => setCurrentArticleId(null)}>Cancel edit</button>
+        <button type="submit" disabled={isDisabled()} id="submitArticle">Submit</button>
+        <button type="button" onClick={() => setCurrentArticleId(null)}>Cancel edit</button>
       </div>
     </form>
   )
